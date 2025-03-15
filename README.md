@@ -197,4 +197,66 @@ Requires a valid token via headers (Authorization: Bearer token) or cookies.
 }
 ```
 
-<!-- ...additional documentation if needed... -->
+## POST /api/captains/register
+
+**Description:**  
+Endpoint to register a new captain.
+
+**Required Data:**
+
+- `fullName.firstName`: string, minimum 3 characters.
+- `fullName.lastName`: string, minimum 3 characters.
+- `email`: string, valid email format.
+- `password`: string, minimum 6 characters.
+- `vehicle.color`: string, minimum 3 characters.
+- `vehicle.plate`: string, minimum 3 characters.
+- `vehicle.capacity`: number, minimum 1.
+- `vehicle.vehicleType`: string, one of ["car", "motorcycle", "auto"].
+
+**Possible Status Codes:**
+
+- **201 Created:** Successful captain registration.
+- **400 Bad Request:** Validation error or captain already exists.
+- **500 Internal Server Error:** Server-side error.
+
+**Example Response (201 Created):**
+
+```json
+{
+  "message": "Captain created successfully",
+  "token": "generated_jwt_token",
+  "captain": {
+    "_id": "unique_captain_id",
+    "fullName": {
+      "firstName": "Jane",
+      "lastName": "Smith"
+    },
+    "email": "jane.smith@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "status": "inactive",
+    "createdAt": "2023-05-15T13:45:30.000Z"
+  }
+}
+```
+
+**Example Error Response (400 Bad Request):**
+
+```json
+{
+  "message": "Captain already exist with this email"
+}
+```
+
+**Example Error Response (500 Internal Server Error):**
+
+```json
+{
+  "message": "Error in controller, registering the captain",
+  "error": "detailed error message"
+}
+```
